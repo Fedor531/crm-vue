@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     meta: {
       layout: 'main'
     },
@@ -14,7 +14,7 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     // Объект meta для записи каких-либо свойств в route
     meta: {
       layout: 'empty'
@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: '/registration',
-    name: 'Register',
+    name: 'register',
     // Объект meta для записи каких-либо свойств в route
     meta: {
       layout: 'empty'
@@ -32,7 +32,7 @@ const routes = [
   },
   {
     path: '/categories',
-    name: 'Categories',
+    name: 'categories',
     meta: {
       layout: 'main'
     },
@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: '/detail',
-    name: 'Detail',
+    name: 'detail',
     meta: {
       layout: 'main'
     },
@@ -48,7 +48,7 @@ const routes = [
   },
   {
     path: '/history',
-    name: 'History',
+    name: 'history',
     meta: {
       layout: 'main'
     },
@@ -56,7 +56,7 @@ const routes = [
   },
   {
     path: '/planning',
-    name: 'Planning',
+    name: 'planning',
     meta: {
       layout: 'main'
     },
@@ -64,7 +64,7 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'Profile',
+    name: 'profile',
     meta: {
       layout: 'main'
     },
@@ -72,19 +72,12 @@ const routes = [
   },
   {
     path: '/record',
-    name: 'Record',
+    name: 'record',
     meta: {
       layout: 'main'
     },
     component: () => import('../views/components/Record.vue')
   },
-
-  /*   {
-      path: '/about',
-      name: 'About',
-      // Оптимизация lazy loading загрузка компонентов по требования - круто!
-      component: () => import('../views/About.vue')
-    } */
 ]
 
 const router = new VueRouter({
