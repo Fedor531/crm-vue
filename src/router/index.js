@@ -1,21 +1,90 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: '/login',
+    name: 'Login',
+    // Объект meta для записи каких-либо свойств в route
+    meta: {
+      layout: 'empty'
+    },
+    component: () => import('../views/auth/Login.vue')
   },
-/*   {
-    path: '/about',
-    name: 'About',
-    // Оптимизация lazy loading загрузка компонентов по требования - круто!
-    component: () => import('../views/About.vue')
-  } */
+  {
+    path: '/registration',
+    name: 'Register',
+    // Объект meta для записи каких-либо свойств в route
+    meta: {
+      layout: 'empty'
+    },
+    component: () => import('../views/auth/Register.vue')
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Categories.vue')
+  },
+  {
+    path: '/detail-record',
+    name: 'DetailRecord',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/DetailRecord.vue')
+  },
+  {
+    path: '/history',
+    name: 'History',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/History.vue')
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Home.vue')
+  },
+  {
+    path: '/planning',
+    name: 'Planning',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Planning.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Profile.vue')
+  },
+  {
+    path: '/record',
+    name: 'Record',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Record.vue')
+  },
+
+  /*   {
+      path: '/about',
+      name: 'About',
+      // Оптимизация lazy loading загрузка компонентов по требования - круто!
+      component: () => import('../views/About.vue')
+    } */
 ]
 
 const router = new VueRouter({
