@@ -2,7 +2,6 @@
   <div id="app">
     <!-- component создает динамические компоненты в зависимости от приходящей строки -->
     <component :is="layout">
-      <router-view />
     </component>
   </div>
 </template>

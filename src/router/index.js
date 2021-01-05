@@ -5,6 +5,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'Home',
+    meta: {
+      layout: 'main'
+    },
+    component: () => import('../views/components/Home.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     // Объект meta для записи каких-либо свойств в route
@@ -31,12 +39,12 @@ const routes = [
     component: () => import('../views/components/Categories.vue')
   },
   {
-    path: '/detail-record',
-    name: 'DetailRecord',
+    path: '/detail',
+    name: 'Detail',
     meta: {
       layout: 'main'
     },
-    component: () => import('../views/components/DetailRecord.vue')
+    component: () => import('../views/components/Detail.vue')
   },
   {
     path: '/history',
@@ -45,14 +53,6 @@ const routes = [
       layout: 'main'
     },
     component: () => import('../views/components/History.vue')
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    meta: {
-      layout: 'main'
-    },
-    component: () => import('../views/components/Home.vue')
   },
   {
     path: '/planning',
