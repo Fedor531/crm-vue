@@ -6,6 +6,7 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+// Создаем экземпляр приложения
 new Vue({
   router,
   store,
