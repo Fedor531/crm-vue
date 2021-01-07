@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import dateFilter from '@/filters/date.filter'
+import currencyFilter from '@/filters/currency.filter'
 import messagePlugin from '@/utils/message.plugin'
 import Loader from '@/ui-components/Loader'
 import './registerServiceWorker'
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 
 /* Добавляем в глобальную область видимости фильтр и даем ему название date */
 Vue.filter('date', dateFilter)
+Vue.filter('currency', currencyFilter)
 
 Vue.use(Vuelidate)
 
