@@ -111,7 +111,7 @@ export default {
   },
 
   methods: {
-    onSubmit() {
+    async onSubmit() {
       // Если поле не валидно
       if (this.$v.$invalid) {
         // Активация валидации
@@ -123,8 +123,14 @@ export default {
         password: this.password,
         name: this.name
       };
-      console.log(formData);
-     /*  this.$router.push("/login"); */
+      try {
+        await this.$store.dispatch('register', formData)
+        .then(() => {
+          this.$router.push("/");
+        })
+      }
+      catch(e) {
+      }
     },
   },
 };

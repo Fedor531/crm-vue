@@ -57,8 +57,8 @@ export default {
   }),
   
   methods: {
-    logout() {
-      console.log('logout');
+    async logout() {
+      await this.$store.dispatch('logout')
       this.$router.push({
         name: 'login',
         query: {
@@ -87,8 +87,7 @@ export default {
 
     if(this.dropdown && this.dropdown.destroy) {
       this.dropdown.destroy()
-    } 
-    console.log('Уничтожение');
+    }
   }
 };
 </script>

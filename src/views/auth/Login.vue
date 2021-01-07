@@ -84,7 +84,7 @@ export default {
     password: { required, minLength: minLength(8) },
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       // Если поле не валидно
       if (this.$v.$invalid) {
         // Активация валидации
@@ -95,8 +95,13 @@ export default {
         email: this.email,
         password: this.password,
       };
-      console.log(formData);
-      /* this.$router.push("/"); */
+      /* Тк action login асинхронный то нужно его подождать и добавляем
+      Для того чтобы работал оператор await нужно к родительской функции добавить async */
+      // В случае если корректно отработает action то делаем redirect
+      try {
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+      } catch (e) {}
     },
   },
   mounted() {
