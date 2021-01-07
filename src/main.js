@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import dateFilter from '@/filters/date.filter'
 import messagePlugin from '@/utils/message.plugin'
+import Loader from '@/ui-components/Loader'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min.js'
 
@@ -21,6 +22,9 @@ Vue.filter('date', dateFilter)
 Vue.use(Vuelidate)
 
 Vue.use(messagePlugin)
+
+// Глобально зарегестрировать компоненту
+Vue.component('Loader', Loader)
 
 const config = {
   apiKey: "AIzaSyDlZv83W_yc8zFTiEt4duWzgMpmFJljz-c",

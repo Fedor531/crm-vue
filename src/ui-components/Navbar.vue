@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropdown"
           >
-            USER NAME
+            {{ name }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -70,6 +70,12 @@ export default {
       const date = new Date()
       this.date = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     } */
+  },
+
+  computed: {
+    name() {
+      return this.$store.getters.info.name
+    }
   },
 
   mounted() {

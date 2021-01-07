@@ -1,12 +1,9 @@
 <template>
   <div class="app-main-layout">
-    <Navbar @click="isOpen = !isOpen"/>
+    <Navbar @click="isOpen = !isOpen" />
     <!-- Передаем значение isOpen в пропсы Sidebar -->
-    <Sidebar :isOpen="isOpen"/>
-    <main 
-      class="app-content"
-      :class="{ full: !isOpen }"
-      >
+    <Sidebar :isOpen="isOpen" />
+    <main class="app-content" :class="{ full: !isOpen }">
       <div class="app-page">
         <router-view />
       </div>
@@ -26,12 +23,17 @@ import Sidebar from "@/ui-components/Sidebar";
 
 export default {
   name: "MainLayout",
-  data: () => ({
-    isOpen: true
-  }),
   components: {
     Navbar,
     Sidebar,
+  },
+  data: () => ({
+    isOpen: true,
+  }),
+  async mounted() {
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch("fetchInfo");
+    }
   },
 };
 </script>

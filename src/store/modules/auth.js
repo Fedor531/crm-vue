@@ -14,9 +14,10 @@ export default {
       }
     },
 
-    async logout() {
+    async logout({ dispatch, commit }) {
       // Очистка информации о пользователе
       await firebase.auth().signOut()
+      commit('clearInfo')
     },
 
     async register({ dispatch, commit }, { email, password, name }) {
