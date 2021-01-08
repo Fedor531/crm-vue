@@ -66,10 +66,6 @@ export default {
         }
       })
     },
- /*    changeTime() {
-      const date = new Date()
-      this.date = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-    } */
   },
 
   computed: {
