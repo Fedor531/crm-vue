@@ -11,6 +11,7 @@
           v-if="categories.length"
           :categories="categories"
           @updated="updateCategories"
+          @deleteUpdate="deleteUpdate"
           :key="categories.length + updateCount"
         />
         <p v-else class="center">Категорий нет</p>
@@ -44,6 +45,9 @@ export default {
       this.categories[idx].limit = category.limit;
       this.updateCount++
     },
+    deleteUpdate() {
+      this.updateCount++
+    }
   },
   async mounted() {
     this.categories = await this.$store.dispatch("fetchCategories");

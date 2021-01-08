@@ -51,9 +51,21 @@
           <i class="material-icons right">send</i>
         </button>
       </form>
+      <button
+        class="btn waves-effect waves-light delete"
+        @click="deleteCategory"
+      >
+        Удалить
+        <i class="material-icons right">delete</i>
+      </button>
     </div>
   </div>
 </template>
+
+<style lang="sass" scoped>
+.delete
+  margin-top: 20px
+</style>
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
@@ -99,7 +111,15 @@ export default {
       try {
         await this.$store.dispatch("updateCategory", categoryData);
         this.$emit("updated", categoryData);
-        this.$message("Категория умпешно обновлена");
+        this.$message("Категория уcпешно обновлена");
+      } catch (e) {}
+    },
+
+    async deleteCategory() {
+      try {
+        await this.$store.dispatch("deleteCategory", this.current);
+        this.$emit("deleteUpdate");
+        this.$message(`Категория "${this.title}" удалена`);
       } catch (e) {}
     },
   },
