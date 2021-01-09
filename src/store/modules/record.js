@@ -28,11 +28,21 @@ export default {
       try {
         const uid = await dispatch('getUid')
         const record = (await firebase.database().ref(`/users/${uid}/records`).child(id).once('value')).val() || []
-        return {...record, id}
+        return { ...record, id }
       } catch (e) {
         commit('setError', e)
         throw e
       }
+    },
+    async deleteRecord({ dispatch, commit }, recordId) {
+      try {
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/users/${uid}/records`).child(recordId).remove()
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
+
     }
 
   }

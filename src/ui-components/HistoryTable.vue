@@ -8,6 +8,7 @@
         <th>Категория</th>
         <th>Тип</th>
         <th>Открыть</th>
+        <th>Удалить</th>
       </tr>
     </thead>
 
@@ -18,9 +19,9 @@
         <td>{{ new Date(record.date) | date("date") }}</td>
         <td>{{ record.categoryName }}</td>
         <td>
-          <span class="white-text badge" :class="[record.typeClass]">{{
-            record.typeName
-          }}</span>
+          <span class="white-text badge" :class="[record.typeClass]">
+            {{ record.typeName }}
+          </span>
         </td>
         <td>
           <button
@@ -29,6 +30,11 @@
             v-tooltip="'Открыть запись'"
           >
             <i class="material-icons">open_in_new</i>
+          </button>
+        </td>
+        <td>
+          <button class="btn-small btn" @click="deleteRecord(record.id)">
+            <i class="material-icons">delete_forever</i>
           </button>
         </td>
       </tr>
@@ -42,6 +48,13 @@ export default {
     records: {
       required: true,
       type: Array,
+    },
+  },
+  methods: {
+    deleteRecord(recordId) {
+      if (confirm("Вы действительно ходите удалить")) {
+        this.$emit("delete", recordId);
+      }
     },
   },
 };
