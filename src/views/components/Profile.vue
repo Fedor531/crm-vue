@@ -47,7 +47,8 @@ export default {
         this.$v.$touch();
         return;
       }
-      this.$store.dispatch('updateName', this.name)
+      const name = this.name
+      this.$store.dispatch('updateInfo', {name})
     },
   },
 };
