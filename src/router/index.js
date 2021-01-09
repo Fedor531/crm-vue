@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import firebase from 'firebase/app'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,8 @@ const routes = [
     path: '/',
     name: 'home',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Home.vue')
   },
@@ -34,7 +36,8 @@ const routes = [
     path: '/categories',
     name: 'categories',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Categories.vue')
   },
@@ -42,7 +45,8 @@ const routes = [
     path: '/detail',
     name: 'detail',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Detail.vue')
   },
@@ -50,7 +54,8 @@ const routes = [
     path: '/history',
     name: 'history',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/History.vue')
   },
@@ -58,7 +63,8 @@ const routes = [
     path: '/planning',
     name: 'planning',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Planning.vue')
   },
@@ -66,7 +72,8 @@ const routes = [
     path: '/profile',
     name: 'profile',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Profile.vue')
   },
@@ -74,7 +81,8 @@ const routes = [
     path: '/record',
     name: 'record',
     meta: {
-      layout: 'main'
+      layout: 'main',
+      auth: true
     },
     component: () => import('../views/components/Record.vue')
   },
@@ -85,6 +93,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+// Метод вызвается перед каждой сменой router
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser
+
+  const requireAuth = to.matched.some(record => record.meta.auth)
+
+  // Если переход требует авторизации и нет пользователся то отправляет на /login
+  if (requireAuth && !currentUser) {
+    next('/login?message=login')
+  } next()
+
 })
 
 export default router

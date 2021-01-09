@@ -23,6 +23,7 @@
 <script>
 import Navbar from "@/ui-components/Navbar";
 import Sidebar from "@/ui-components/Sidebar";
+import messages from '@/utils/messages'
 
 export default {
   name: "MainLayout",
@@ -34,6 +35,17 @@ export default {
     isOpen: true,
     loading: true,
   }),
+    computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(fbError) {
+      console.log(fbError);
+      this.$error(messages[fbError.code] || 'Что-то пошло не так')
+    }
+  },
   async mounted() {
     // Если есть данные то загрузки не будет , а если нет данных придется дождаться запроса
     if (!Object.keys(this.$store.getters.info).length) {
