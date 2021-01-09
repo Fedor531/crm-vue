@@ -26,6 +26,7 @@ export default {
         console.log(e);
       }
     },
+
     async updateInfo({ dispatch, commit, getters }, toUpdate) {
       try {
         const uid = await dispatch('getUid')

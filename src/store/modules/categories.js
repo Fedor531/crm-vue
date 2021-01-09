@@ -17,20 +17,6 @@ export default {
       try {
         const uid = await dispatch('getUid')
         const categories = (await firebase.database().ref(`/users/${uid}/categories`).once('value')).val() || []
-
-        /* const cats = []
-
-        Object.keys(categories).forEach(key => {
-          cats.push({
-            id: key,
-            title: categories[key].title,
-            limit: categories[key].limit,
-          })
-        })
-
-        return cats */
-
-        // Используя spread-оператор получаем тоже самое что и резльтат выше
         return Object.keys(categories).map(key => ({
           ...categories[key], id: key
         }))

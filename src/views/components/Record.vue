@@ -7,7 +7,7 @@
 
     <p class="center" v-else-if="!categories.length">
       Категорий пока нет.
-      <router-link to="categories">Добавить новую категорию</router-link>
+      <router-link to="/categories">Добавить новую категорию</router-link>
     </p>
 
     <form class="form" v-else @submit.prevent="onSubmit">
