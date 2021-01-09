@@ -8,6 +8,7 @@ import currencyFilter from '@/filters/currency.filter'
 import messagePlugin from '@/utils/message.plugin'
 import Loader from '@/ui-components/Loader'
 import tooltipDirective from '@/directives/tooltip.directive'
+import Paginate from 'vuejs-paginate'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min.js'
 
@@ -21,14 +22,15 @@ Vue.config.productionTip = false
 /* Добавляем в глобальную область видимости фильтр и даем ему название date */
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
+
 Vue.directive('tooltip', tooltipDirective)
 
 Vue.use(Vuelidate)
-
 Vue.use(messagePlugin)
 
 // Глобально зарегестрировать компоненту
 Vue.component('Loader', Loader)
+Vue.component('Paginate', Paginate)
 
 const config = {
   apiKey: "AIzaSyDlZv83W_yc8zFTiEt4duWzgMpmFJljz-c",
