@@ -30,26 +30,26 @@
 </template>
 
 <script>
-import { required } from "vuelidate/lib/validators";
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   data: () => ({
-    name: "",
+    name: ''
   }),
   validations: {
-    name: { required },
+    name: { required }
   },
   methods: {
     async onSubmit() {
       // Если поле не валидно
       if (this.$v.$invalid) {
         // Активация валидации
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const name = this.name
-      this.$store.dispatch('updateInfo', {name})
-    },
-  },
-};
+      this.$store.dispatch('updateInfo', { name })
+    }
+  }
+}
 </script>

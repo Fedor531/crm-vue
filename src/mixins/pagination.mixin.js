@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _, { update } from 'lodash'
 
 export default {
   data() {
@@ -6,7 +6,7 @@ export default {
       page: +this.$route.query.page || 1,
       pageSize: 5,
       pageCount: 0,
-      allItmes: [],/* Хранение всех данных */
+      allItmes: [] /* Хранение всех данных */,
       items: [] /* Показываемые данные */
     }
   },

@@ -18,39 +18,39 @@
 </template>
 
 <script>
-import HomeBill from "@/ui-components/HomeBill";
-import HomeCurrency from "@/ui-components/HomeCurrency";
+import HomeBill from '@/ui-components/HomeBill'
+import HomeCurrency from '@/ui-components/HomeCurrency'
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
     HomeBill,
-    HomeCurrency,
+    HomeCurrency
   },
   data: () => ({
     loading: true,
-    currency: null,
+    currency: null
   }),
   methods: {
     async refresh() {
-      this.loading = true;
+      this.loading = true
       try {
-        this.currency = await this.$store.dispatch("fetchCurrency");
-        console.log(this.currency);
-        this.loading = false;
+        this.currency = await this.$store.dispatch('fetchCurrency')
+        console.log(this.currency)
+        this.loading = false
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-    },
+    }
   },
   async mounted() {
     try {
-      this.currency = await this.$store.dispatch("fetchCurrency");
-      console.log(this.currency);
-      this.loading = false;
+      this.currency = await this.$store.dispatch('fetchCurrency')
+      console.log(this.currency)
+      this.loading = false
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
-  },
-};
+  }
+}
 </script>

@@ -20,15 +20,14 @@
   </div>
 </template>
 
-
 <script>
-import CategoryCreate from "@/ui-components/CategoryCreate";
-import CategoryEdit from "@/ui-components/CategoryEdit";
+import CategoryCreate from '@/ui-components/CategoryCreate'
+import CategoryEdit from '@/ui-components/CategoryEdit'
 export default {
-  name: "categories",
+  name: 'categories',
   components: {
     CategoryCreate,
-    CategoryEdit,
+    CategoryEdit
   },
   data: () => ({
     categories: [],
@@ -37,12 +36,12 @@ export default {
   }),
   methods: {
     addNewCategory(category) {
-      this.categories.push(category);
+      this.categories.push(category)
     },
     updateCategories(category) {
-      const idx = this.categories.findIndex((c) => c.id === category.id);
-      this.categories[idx].title = category.title;
-      this.categories[idx].limit = category.limit;
+      const idx = this.categories.findIndex(c => c.id === category.id)
+      this.categories[idx].title = category.title
+      this.categories[idx].limit = category.limit
       this.updateCount++
     },
     deleteUpdate() {
@@ -50,8 +49,8 @@ export default {
     }
   },
   async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
-  },
-};
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.loading = false
+  }
+}
 </script>

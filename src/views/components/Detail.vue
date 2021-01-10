@@ -5,7 +5,7 @@
       <div class="breadcrumb-wrap">
         <router-link to="/history" class="breadcrumb">История</router-link>
         <a @click.prevent class="breadcrumb">
-          {{ record.type === "income" ? "Доход" : "Расход" }}
+          {{ record.type === 'income' ? 'Доход' : 'Расход' }}
         </a>
       </div>
       <div class="row">
@@ -14,15 +14,15 @@
             class="card"
             :class="{
               red: record.type === 'outcome',
-              green: record.type === 'income',
+              green: record.type === 'income'
             }"
           >
             <div class="card-content white-text">
               <p>Описание: {{ record.description }}</p>
-              <p>Сумма: {{ record.amount | currency("RUB") }}</p>
+              <p>Сумма: {{ record.amount | currency('RUB') }}</p>
               <p>Категория: {{ record.categoryName }}</p>
 
-              <small>{{ new Date(record.date) | date("date") }}</small>
+              <small>{{ new Date(record.date) | date('date') }}</small>
             </div>
           </div>
         </div>
@@ -36,24 +36,24 @@
 
 <script>
 export default {
-  name: "detail",
+  name: 'detail',
   data: () => ({
     record: null,
-    loading: true,
+    loading: true
   }),
   async mounted() {
-    const id = this.$route.params.id;
-    const record = await this.$store.dispatch("fetchRecordById", id);
+    const id = this.$route.params.id
+    const record = await this.$store.dispatch('fetchRecordById', id)
     const category = await this.$store.dispatch(
-      "fetchCategoryById",
+      'fetchCategoryById',
       record.categoryId
-    );
+    )
 
     this.record = {
       ...record,
-      categoryName: category.title,
-    };
-    this.loading = false;
-  },
-};
+      categoryName: category.title
+    }
+    this.loading = false
+  }
+}
 </script>
