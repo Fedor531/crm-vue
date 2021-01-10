@@ -23,6 +23,11 @@ import HomeCurrency from '@/ui-components/HomeCurrency'
 
 export default {
   name: 'home',
+   metaInfo() {
+    return {
+      title: this.$title('Menu_Bill')
+    }
+  },
   components: {
     HomeBill,
     HomeCurrency

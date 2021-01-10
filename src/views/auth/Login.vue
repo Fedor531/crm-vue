@@ -7,7 +7,7 @@
           :class="{
             invalid:
               ($v.email.$dirty && !$v.email.required) ||
-              ($v.email.$dirty && !$v.email.email),
+              ($v.email.$dirty && !$v.email.email)
           }"
           v-model.trim="email"
           id="email"
@@ -32,7 +32,7 @@
           :class="{
             invalid:
               ($v.password.$dirty && !$v.password.required) ||
-              ($v.password.$dirty && !$v.password.minLength),
+              ($v.password.$dirty && !$v.password.minLength)
           }"
           v-model.trim="password"
           id="password"
@@ -71,43 +71,48 @@
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
-import messages from "@/utils/messages";
+import { email, required, minLength } from 'vuelidate/lib/validators'
+import messages from '@/utils/messages'
 export default {
-  name: "login",
+  name: 'login',
+  metaInfo() {
+    return {
+      title: this.$title('Login')
+    }
+  },
   data: () => ({
-    email: "",
-    password: "",
+    email: '',
+    password: ''
   }),
   validations: {
     email: { email, required },
-    password: { required, minLength: minLength(8) },
+    password: { required, minLength: minLength(8) }
   },
   methods: {
     async onSubmit() {
       // Если поле не валидно
       if (this.$v.$invalid) {
         // Активация валидации
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
-        password: this.password,
-      };
+        password: this.password
+      }
       /* Тк action login асинхронный то нужно его подождать и добавляем
       Для того чтобы работал оператор await нужно к родительской функции добавить async */
       // В случае если корректно отработает action то делаем redirect
       try {
-        await this.$store.dispatch("login", formData);
-        this.$router.push("/");
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
       } catch (e) {}
-    },
+    }
   },
   mounted() {
     if (messages[this.$route.query.message]) {
-      this.$message(messages[this.$route.query.message]);
+      this.$message(messages[this.$route.query.message])
     }
-  },
-};
+  }
+}
 </script>

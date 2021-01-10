@@ -46,8 +46,15 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import { mapGetters, mapActions } from 'vuex'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
+  name: 'profile',
+  metaInfo() {
+    return {
+      title: this.$title('ProfileTitle')
+    }
+  },
   data: () => ({
     name: '',
     isRuLocale: true
@@ -65,7 +72,10 @@ export default {
         return
       }
       try {
-        await this.updateInfo({ name: this.name, locale: this.isRuLocale ? 'ru-RU' : 'en-US' })
+        await this.updateInfo({
+          name: this.name,
+          locale: this.isRuLocale ? 'ru-RU' : 'en-US'
+        })
       } catch (e) {}
     }
   },

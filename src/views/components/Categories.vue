@@ -25,6 +25,11 @@ import CategoryCreate from '@/ui-components/CategoryCreate'
 import CategoryEdit from '@/ui-components/CategoryEdit'
 export default {
   name: 'categories',
+   metaInfo() {
+    return {
+      title: this.$title('Menu_Categories')
+    }
+  },
   components: {
     CategoryCreate,
     CategoryEdit

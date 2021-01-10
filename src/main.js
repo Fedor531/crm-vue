@@ -7,11 +7,13 @@ import dateFilter from '@/filters/date.filter'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
 import messagePlugin from '@/utils/message.plugin'
+import titlePlugin from '@/utils/title.plugin'
 import Loader from '@/ui-components/Loader'
 import tooltipDirective from '@/directives/tooltip.directive'
 import Paginate from 'vuejs-paginate'
 import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min.js'
+import VueMeta from 'vue-meta'
 
 import firebase from 'firebase/app'
 
@@ -29,6 +31,8 @@ Vue.directive('tooltip', tooltipDirective)
 
 Vue.use(Vuelidate)
 Vue.use(messagePlugin)
+Vue.use(titlePlugin)
+Vue.use(VueMeta)
 
 // Глобально зарегестрировать компоненту
 Vue.component('Loader', Loader)

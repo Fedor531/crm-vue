@@ -7,7 +7,7 @@
           :class="{
             invalid:
               ($v.email.$dirty && !$v.email.required) ||
-              ($v.email.$dirty && !$v.email.email),
+              ($v.email.$dirty && !$v.email.email)
           }"
           v-model.trim="email"
           id="email"
@@ -32,7 +32,7 @@
           :class="{
             invalid:
               ($v.password.$dirty && !$v.password.required) ||
-              ($v.password.$dirty && !$v.password.minLength),
+              ($v.password.$dirty && !$v.password.minLength)
           }"
           v-model.trim="password"
           id="password"
@@ -91,23 +91,27 @@
   </form>
 </template>
 
-
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required, minLength } from 'vuelidate/lib/validators'
 
 export default {
-  name: "register",
+  name: 'register',
+  metaInfo() {
+    return {
+      title: this.$title('Registration')
+    }
+  },
   data: () => ({
-    email: "",
-    password: "",
-    name: "",
-    agree: false,
+    email: '',
+    password: '',
+    name: '',
+    agree: false
   }),
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(8) },
     name: { required },
-    agree: { checked: (v) => v },
+    agree: { checked: v => v }
   },
 
   methods: {
@@ -115,23 +119,20 @@ export default {
       // Если поле не валидно
       if (this.$v.$invalid) {
         // Активация валидации
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
         password: this.password,
         name: this.name
-      };
+      }
       try {
-        await this.$store.dispatch('register', formData)
-        .then(() => {
-          this.$router.push("/");
+        await this.$store.dispatch('register', formData).then(() => {
+          this.$router.push('/')
         })
-      }
-      catch(e) {
-      }
-    },
-  },
-};
+      } catch (e) {}
+    }
+  }
+}
 </script>
