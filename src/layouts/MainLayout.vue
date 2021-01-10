@@ -4,7 +4,7 @@
     <div class="app-main-layout" v-else>
       <Navbar @click="isOpen = !isOpen" />
       <!-- Передаем значение isOpen в пропсы Sidebar -->
-      <Sidebar :isOpen="isOpen" />
+      <Sidebar :isOpen="isOpen" :key="locale" />
       <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
           <router-view />
@@ -38,13 +38,16 @@ export default {
     computed: {
     error() {
       return this.$store.getters.error
+    },
+    locale() {
+      return this.$store.getters.info.locale
     }
   },
   watch: {
     error(fbError) {
       console.log(fbError);
       this.$error(messages[fbError.code] || 'Что-то пошло не так')
-    }
+    },
   },
   async mounted() {
     // Если есть данные то загрузки не будет , а если нет данных придется дождаться запроса

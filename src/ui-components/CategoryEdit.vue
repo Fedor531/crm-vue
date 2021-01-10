@@ -68,78 +68,78 @@
 </style>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators";
+import { required, minValue } from 'vuelidate/lib/validators'
 
 export default {
   props: {
     categories: {
       type: Array,
-      requried: true,
-    },
+      requried: true
+    }
   },
   data: () => ({
     select: null,
-    title: "",
+    title: '',
     limit: 1000,
-    current: null,
+    current: null
   }),
   validations: {
     title: { required },
-    limit: { minValue: minValue(1000) },
+    limit: { minValue: minValue(1000) }
   },
   watch: {
     current(catID) {
-      const { title, limit } = this.categories.find((c) => c.id === catID);
-      this.title = title;
-      this.limit = limit;
-    },
+      const { title, limit } = this.categories.find(c => c.id === catID)
+      this.title = title
+      this.limit = limit
+    }
   },
 
   methods: {
     async onSubmit() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
 
       const categoryData = {
         id: this.current,
         title: this.title,
-        limit: this.limit,
-      };
+        limit: this.limit
+      }
 
       try {
-        await this.$store.dispatch("updateCategory", categoryData);
-        this.$emit("updated", categoryData);
-        this.$message("Категория уcпешно обновлена");
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$emit('updated', categoryData)
+        this.$message('Категория уcпешно обновлена')
       } catch (e) {}
     },
 
     async deleteCategory() {
       try {
-        await this.$store.dispatch("deleteCategory", this.current);
-        this.$emit("deleteUpdate");
-        this.$message(`Категория "${this.title}" удалена`);
+        await this.$store.dispatch('deleteCategory', this.current)
+        this.$emit('deleteUpdate')
+        this.$message(`Категория "${this.title}" удалена`)
       } catch (e) {}
-    },
+    }
   },
 
   created() {
-    const { id, title, limit } = this.categories[0];
-    this.current = id;
-    this.title = title;
-    this.limit = limit;
+    const { id, title, limit } = this.categories[0]
+    this.current = id
+    this.title = title
+    this.limit = limit
   },
 
   mounted() {
-    this.select = M.FormSelect.init(this.$refs.select);
-    M.updateTextFields();
+    this.select = M.FormSelect.init(this.$refs.select)
+    M.updateTextFields()
   },
 
   destroyed() {
     if (this.select && this.select.destroy) {
-      this.select.destroy();
+      this.select.destroy()
     }
-  },
-};
+  }
+}
 </script>

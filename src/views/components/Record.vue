@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Новая запись</h3>
+      <h3>{{ 'Menu_NewRecord' | localize }}</h3>
     </div>
     <Loader v-if="loading" />
 
