@@ -45,26 +45,30 @@
             Минимальная величина {{ this.$v.limit.$params.minValue.min }}
           </span>
         </div>
-
-        <button class="btn waves-effect waves-light" type="submit">
+      </form>
+      <div class="button-container">
+        <button class="btn waves-effect waves-light" @click="updateCategory">
           Обновить
           <i class="material-icons right">send</i>
         </button>
-      </form>
-      <button
-        class="btn waves-effect waves-light delete"
-        @click="deleteCategory"
-      >
-        Удалить
-        <i class="material-icons right">delete</i>
-      </button>
+        <button
+          class="btn waves-effect waves-light delete"
+          @click="deleteCategory"
+        >
+          Удалить
+          <i class="material-icons right">delete</i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="sass" scoped>
 .delete
-  margin-top: 20px
+  margin-left: 20px
+
+.button-container
+  display: flex
 </style>
 
 <script>
@@ -118,9 +122,13 @@ export default {
     async deleteCategory() {
       try {
         await this.$store.dispatch('deleteCategory', this.current)
-        this.$emit('deleteUpdate')
+        this.$emit('deleteUpdate', this.current)
         this.$message(`Категория "${this.title}" удалена`)
       } catch (e) {}
+    },
+
+    updateCategory() {
+      this.onSubmit()
     }
   },
 

@@ -47,10 +47,12 @@ export default {
       const idx = this.categories.findIndex(c => c.id === category.id)
       this.categories[idx].title = category.title
       this.categories[idx].limit = category.limit
-      this.updateCount++
+      setTimeout(() => {this.updateCount++}, 0)
     },
-    deleteUpdate() {
+    deleteUpdate(categoryId) {
+      this.categories = this.categories.filter(c => c.id !== categoryId)
       this.updateCount++
+      setTimeout(() => {this.updateCount++}, 0)
     }
   },
   async mounted() {
