@@ -36,7 +36,7 @@ import { Pie } from 'vue-chartjs'
 
 export default {
   name: 'history',
-   metaInfo() {
+  metaInfo() {
     return {
       title: this.$title('Menu_History')
     }
@@ -60,7 +60,7 @@ export default {
       this.$message('Запись удалена')
     },
 
-    setup() {
+    async setup() {
       this.setupPagination(
         this.records.map(record => {
           return {
@@ -110,7 +110,6 @@ export default {
   },
   async mounted() {
     this.records = await this.$store.dispatch('fetchRecords')
-
     this.categories = await this.$store.dispatch('fetchCategories')
 
     this.setup()

@@ -23,6 +23,7 @@
 <script>
 import CategoryCreate from '@/ui-components/CategoryCreate'
 import CategoryEdit from '@/ui-components/CategoryEdit'
+
 export default {
   name: 'categories',
    metaInfo() {
@@ -53,7 +54,7 @@ export default {
       this.categories = this.categories.filter(c => c.id !== categoryId)
       this.updateCount++
       setTimeout(() => {this.updateCount++}, 0)
-    }
+    },
   },
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')

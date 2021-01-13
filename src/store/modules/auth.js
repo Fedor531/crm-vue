@@ -6,9 +6,8 @@ export default {
       try {
         // Метод авторизации
         await firebase.auth().signInWithEmailAndPassword(email, password)
-      }
-      catch (e) {
-        // Вызываем мутацию из главного store 
+      } catch (e) {
+        // Вызываем мутацию из главного store
         commit('setError', e)
         throw e
       }
@@ -26,13 +25,15 @@ export default {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         // Вызываем action
         const uid = await dispatch('getUid')
-        // Добавляем в базу данных таблицу с uid и info 
-        await firebase.database().ref(`/users/${uid}/info`).set({
-          bill: 10000,
-          name
-        })
-      }
-      catch (e) {
+        // Добавляем в базу данных таблицу с uid и info
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .set({
+            bill: 10000,
+            name
+          })
+      } catch (e) {
         commit('setError', e)
         throw e
       }
@@ -42,6 +43,5 @@ export default {
       const user = firebase.auth().currentUser
       return user ? user.uid : null
     }
-
   }
 }
