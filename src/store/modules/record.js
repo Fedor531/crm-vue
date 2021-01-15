@@ -51,7 +51,6 @@ export default {
       }
     },
     async deleteRecord({ dispatch, commit }, recordId) {
-      console.log(recordId);
       try {
         const uid = await dispatch('getUid')
         await firebase

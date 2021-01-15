@@ -71,6 +71,7 @@ export default {
     async deleteCategory({ commit, dispatch }, categoryId) {
       try {
         const uid = await dispatch('getUid')
+        // Удаляем все записи категории из бд
         let records = (await firebase.database().ref(`/users/EJKn3YJZa7fn3Pd2xwAcOKl8zBU2/records`).once('value')).val() || []
         Object.keys(records).map(key => ({
             ...records[key], id: key
@@ -79,6 +80,7 @@ export default {
               dispatch('deleteRecord', r.id)
             }
           })
+        // Удаляем категорию из бд
         await firebase
           .database()
           .ref(`/users/${uid}/categories/${categoryId}`)

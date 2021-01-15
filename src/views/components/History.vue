@@ -2,6 +2,18 @@
   <div>
     <div class="page-title">
       <h3>{{ 'RecordHistory' | localize }}</h3>
+      <button
+        class="btn-small btn  waves-effect waves-light graf-button all-button"
+        @click="setup"
+      >
+        <i class="material-icons">Общее</i>
+      </button>
+      <button
+        class="btn-small btn  waves-effect waves-light graf-button"
+        @click="viewIncomeOutcomeChart"
+      >
+        <i class="material-icons">График расходов и доходов</i>
+      </button>
     </div>
 
     <div class="history-chart">
@@ -28,6 +40,15 @@
     </section>
   </div>
 </template>
+
+<style lang="sass" scoped>
+
+.graf-button
+  line-height: 0
+
+.all-button
+  margin: 0 30px 0 auto
+</style>
 
 <script>
 import paginationMixin from '@/mixins/pagination.mixin'
@@ -58,6 +79,35 @@ export default {
       this.records = this.records.filter(r => r.id !== recordId)
       this.setup()
       this.$message('Запись удалена')
+    },
+
+    viewIncomeOutcomeChart() {
+      const arr = [
+        { title: 'Доход', type: 'income' },
+        { title: 'Расход', type: 'outcome' }
+      ]
+      this.renderChart({
+        labels: arr.map(c => c.title),
+        datasets: [
+          {
+            label: 'Доход и расход',
+            data: arr.map(c => {
+              return this.records.reduce((total, r) => {
+                if (r.type === c.type) {
+                  total += +r.amount
+                }
+                return total
+              }, 0)
+            }),
+            backgroundColor: [
+              'rgba(74, 201, 6, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: ['rgba(74, 201, 2, 1)', 'rgba(255, 99, 132, 1)'],
+            borderWidth: 1
+          }
+        ]
+      })
     },
 
     async setup() {
