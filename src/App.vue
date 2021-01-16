@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style lang="sass">
+body
+  font-family: 'Roboto', sans-serif
+
 @import '~materialize-css/dist/css/materialize.min.css'
 @import 'assets/index.css'
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 </style>

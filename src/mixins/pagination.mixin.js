@@ -1,4 +1,4 @@
-import _, { update } from 'lodash'
+import _ from 'lodash'
 
 export default {
   data() {

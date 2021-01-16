@@ -7,6 +7,19 @@
 
       <form @submit.prevent="submitHandler">
         <div class="input-field">
+          <select ref="select" v-model="current">
+            <option
+              v-for="item in typeCategory"
+              :key="item.id"
+              :value="item.type"
+            >
+              {{ item.name }}
+            </option>
+          </select>
+          <label>Источник расхода/дохода</label>
+        </div>
+
+        <div class="input-field">
           <input
             id="name"
             type="text"
@@ -21,7 +34,7 @@
           >
         </div>
 
-        <div class="input-field">
+        <div class="input-field" v-if="watchTypeCategory">
           <input
             id="limit"
             type="number"
@@ -47,41 +60,72 @@
 </template>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators";
+import { required, minValue } from 'vuelidate/lib/validators'
 
 export default {
   data: () => ({
-    title: "",
+    title: '',
     limit: 1000,
+    current: null,
+    typeCategory: [
+      {
+        id: 1,
+        name: 'Расход',
+        type: 'outcome'
+      },
+      {
+        id: 2,
+        name: 'Доход',
+        type: 'income'
+      }
+    ]
   }),
   validations: {
     title: { required },
-    limit: { minValue: minValue(1000) },
+    limit: { minValue: minValue(1000) }
   },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       try {
-        const category = await this.$store.dispatch("createCategory", {
+        const category = await this.$store.dispatch('createCategory', {
           title: this.title,
-          limit: this.limit,
-        });
+          type: this.current,
+          limit: this.limit
+        })
         this.title = ''
         this.limit = 1000
         this.$v.$reset()
         this.$message('Категория была создана')
-        // Вызываем родительскую функцию переданную в просах
         this.$emit('created', category)
-      } catch (e) {
+      } catch (e) {}
+    }
+  },
+  watch: {
+    // Повешали слушатель на computed свойство
+    watchTypeCategory() {
+      if (this.current === 'outcome') {
+        setTimeout(() => {
+          M.updateTextFields()
+        }, 0)
       }
-    },
+    }
+  },
+  computed: {
+    watchTypeCategory() {
+      return this.current === 'outcome'
+    }
+  },
+  created() {
+    this.current = 'outcome'
   },
   mounted() {
     // Обновить значения input
-    M.updateTextFields();
-  },
-};
+    this.select = M.FormSelect.init(this.$refs.select)
+    M.updateTextFields()
+  }
+}
 </script>
