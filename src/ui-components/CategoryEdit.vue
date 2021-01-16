@@ -30,7 +30,7 @@
           >
         </div>
 
-        <div class="input-field">
+        <div class="input-field" v-if="watchTypeCategory">
           <input
             id="limit"
             type="number"
@@ -96,6 +96,11 @@ export default {
       const { title, limit } = this.categories.find(c => c.id === catID)
       this.title = title
       this.limit = limit
+    },
+     watchTypeCategory() {
+      setTimeout(() => {
+        M.updateTextFields()
+      }, 0)
     }
   },
 
@@ -109,9 +114,9 @@ export default {
       const categoryData = {
         id: this.current,
         title: this.title,
+        type: this.categories.find(c => c.id == this.current).type,
         limit: this.limit
       }
-
       try {
         await this.$store.dispatch('updateCategory', categoryData)
         this.$emit('updated', categoryData)
@@ -129,6 +134,15 @@ export default {
 
     updateCategory() {
       this.onSubmit()
+    }
+  },
+  computed: {
+    watchTypeCategory() {
+      return this.categories.some(c => {
+        if (c.id === this.current && c.type === 'outcome') {
+          return true
+        }
+      })
     }
   },
 

@@ -56,14 +56,16 @@ export default {
       }
     },
 
-    async updateCategory({ commit, dispatch }, { id, title, limit }) {
+    async updateCategory({ commit, dispatch }, { id, title, type, limit }) {
+      const categoryDateObj =
+        type === 'outcome' ? { title, type, limit } : { title, type }
       try {
         const uid = await dispatch('getUid')
         await firebase
           .database()
           .ref(`/users/${uid}/categories`)
           .child(id)
-          .update({ title, limit })
+          .update(categoryDateObj)
       } catch (e) {
         commit('setError', e)
         throw e

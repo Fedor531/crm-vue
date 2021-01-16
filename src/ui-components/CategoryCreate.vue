@@ -7,7 +7,7 @@
 
       <form @submit.prevent="submitHandler">
         <div class="input-field">
-          <select ref="select" v-model="current">
+          <select ref="select" v-model="currentType">
             <option
               v-for="item in typeCategory"
               :key="item.id"
@@ -64,9 +64,10 @@ import { required, minValue } from 'vuelidate/lib/validators'
 
 export default {
   data: () => ({
+    select: null,
     title: '',
     limit: 1000,
-    current: null,
+    currentType: null,
     typeCategory: [
       {
         id: 1,
@@ -93,7 +94,7 @@ export default {
       try {
         const category = await this.$store.dispatch('createCategory', {
           title: this.title,
-          type: this.current,
+          type: this.currentType,
           limit: this.limit
         })
         this.title = ''
@@ -107,7 +108,7 @@ export default {
   watch: {
     // Повешали слушатель на computed свойство
     watchTypeCategory() {
-      if (this.current === 'outcome') {
+      if (this.currentType === 'outcome') {
         setTimeout(() => {
           M.updateTextFields()
         }, 0)
@@ -116,16 +117,21 @@ export default {
   },
   computed: {
     watchTypeCategory() {
-      return this.current === 'outcome'
+      return this.currentType === 'outcome'
     }
   },
   created() {
-    this.current = 'outcome'
+    this.currentType = 'outcome'
   },
   mounted() {
     // Обновить значения input
     this.select = M.FormSelect.init(this.$refs.select)
     M.updateTextFields()
+  },
+  destroyed() {
+    if (this.select && this.select.destroy) {
+      this.select.destroy()
+    }
   }
 }
 </script>
