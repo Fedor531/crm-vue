@@ -80,7 +80,7 @@ export default {
           (
             await firebase
               .database()
-              .ref(`/users/EJKn3YJZa7fn3Pd2xwAcOKl8zBU2/records`)
+              .ref(`/users/${uid}/records`)
               .once('value')
           ).val() || []
         Object.keys(records)

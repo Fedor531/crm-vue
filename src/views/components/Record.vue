@@ -12,7 +12,7 @@
 
     <form class="form" v-else @submit.prevent="onSubmit">
       <div class="input-field">
-        <select ref="select" v-model="category">
+        <select ref="select" v-model="categoryId">
           <option v-for="c in categories" :key="c.id" :value="c.id">
             {{ c.title }}
           </option>
@@ -23,6 +23,7 @@
       <p>
         <label>
           <input
+            disabled
             class="with-gap"
             name="type"
             type="radio"
@@ -36,6 +37,7 @@
       <p>
         <label>
           <input
+            disabled
             class="with-gap"
             name="type"
             type="radio"
@@ -103,17 +105,29 @@ export default {
     loading: true,
     categories: [],
     select: null,
-    category: null,
+    categoryId: null,
     type: 'outcome',
-    amount: 1,
+    amount: 10,
     description: ''
   }),
   validations: {
-    amount: { minValue: minValue(1) },
+    amount: { minValue: minValue(10) },
     description: { required }
+  },
+  watch: {
+    categoryId() {
+      this.categories.forEach(c => {
+        if (c.id === this.categoryId && c.type === 'income') {
+          this.type = 'income'
+        } else if (c.id === this.categoryId && c.type === 'outcome') {
+          this.type = 'outcome'
+        }
+      })
+    }
   },
   computed: {
     ...mapGetters(['info']),
+
     canCreateRecord() {
       if (this.type === 'income') {
         return true
@@ -132,7 +146,7 @@ export default {
       if (this.canCreateRecord) {
         try {
           this.$store.dispatch('createRecord', {
-            categoryId: this.category,
+            categoryId: this.categoryId,
             amount: this.amount,
             description: this.description,
             type: this.type,
@@ -145,7 +159,7 @@ export default {
           await this.$store.dispatch('updateInfo', { bill })
           this.$message('Запись успешно создана')
           this.$v.$reset()
-          this.amount = 1
+          this.amount = 10
           this.description = ''
         } catch (e) {}
       } else {
@@ -160,7 +174,7 @@ export default {
     this.loading = false
 
     if (this.categories.length) {
-      this.category = this.categories[0].id
+      this.categoryId = this.categories[0].id
     }
 
     setTimeout(() => {
@@ -168,6 +182,7 @@ export default {
       M.updateTextFields()
     }, 0)
   },
+
   destroyed() {
     if (this.select && this.select.destroy) {
       this.select.destroy()
