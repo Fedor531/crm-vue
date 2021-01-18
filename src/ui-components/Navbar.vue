@@ -1,17 +1,17 @@
 <template>
-  <nav class="navbar green lighten-1">
+  <nav class="navbar teal darken-2">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="$emit('click')">
-          <i class="material-icons black-text">dehaze</i>
+          <i class="material-icons white-text">dehaze</i>
         </a>
-        <span class="black-text time">{{ date | date('datetime')}}</span>
+        <span class="white-text time">{{ date | date('datetime') }}</span>
       </div>
 
       <ul class="right hide-on-small-and-down">
         <li>
           <a
-            class="dropdown-trigger black-text"
+            class="dropdown-trigger white-text"
             href="#"
             data-target="dropdown"
             ref="dropdown"
@@ -22,17 +22,16 @@
 
           <ul id="dropdown" class="dropdown-content">
             <li>
-              <router-link 
-                class="black-text"
-                to="/profile"
-                >
-                <i class="material-icons">account_circle</i>Профиль
+              <router-link class="black-text" to="/profile">
+                <i class="material-icons">account_circle</i
+                >{{ 'ProfileTitle' | localize }}
               </router-link>
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
               <a href="#" class="black-text" @click.prevent="logout">
-                <i class="material-icons">assignment_return</i>Выйти
+                <i class="material-icons">assignment_return</i
+                >{{ 'LogOut' | localize }}
               </a>
             </li>
           </ul>
@@ -47,7 +46,6 @@
   font-weight: 500
 </style>
 
-
 <script>
 export default {
   data: () => ({
@@ -55,7 +53,7 @@ export default {
     interval: null,
     dropdown: null
   }),
-  
+
   methods: {
     async logout() {
       await this.$store.dispatch('logout')
@@ -65,7 +63,7 @@ export default {
           message: 'logout'
         }
       })
-    },
+    }
   },
 
   computed: {
@@ -77,7 +75,7 @@ export default {
   mounted() {
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
       constrainWidth: true
-    });
+    })
     this.interval = setInterval(() => {
       this.date = new Date()
     }, 1000)
@@ -87,9 +85,9 @@ export default {
     // Убираем интервал если навигации нет в шаблоне, чтобы избежать утечки памяти
     clearInterval(this.interval)
 
-    if(this.dropdown && this.dropdown.destroy) {
+    if (this.dropdown && this.dropdown.destroy) {
       this.dropdown.destroy()
     }
   }
-};
+}
 </script>

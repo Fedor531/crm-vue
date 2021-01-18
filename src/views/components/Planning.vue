@@ -36,7 +36,7 @@ import currencyFilter from '@/filters/currency.filter'
 
 export default {
   name: 'planning',
-   metaInfo() {
+  metaInfo() {
     return {
       title: this.$title('Menu_Planning')
     }
@@ -52,7 +52,15 @@ export default {
     const records = await this.$store.dispatch('fetchRecords')
     const categories = await this.$store.dispatch('fetchCategories')
 
-    this.categories = categories.map(cat => {
+    const outcomeCategories = []
+
+    categories.forEach(c => {
+      if(c.type === 'outcome') {
+        outcomeCategories.push(c)
+      }
+    })
+
+    this.categories = outcomeCategories.map(cat => {
       const spend = records
         .filter(r => r.categoryId === cat.id)
         .filter(r => r.type === 'outcome')

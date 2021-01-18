@@ -12,7 +12,15 @@
   "Detail_Title": "Обзор",
 
   "Login": "Логин",
+  "LogOut": "Выйти",
   "Registration": "Регистрация",
 
-  "RecordHistory": "История записей"
+  "RecordHistory": "История записей",
+
+  "BillInCurrency": "Счет в валюте",
+  "ExchangeRate": "Курс валют",
+  "Currency": "Валюта",
+  "Exchange": "Курс",
+  "Date": "Дата",
+  "Expenses": "Расходы"
 }

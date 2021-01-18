@@ -23,7 +23,7 @@ import HomeCurrency from '@/ui-components/HomeCurrency'
 
 export default {
   name: 'home',
-   metaInfo() {
+  metaInfo() {
     return {
       title: this.$title('Menu_Bill')
     }
@@ -40,8 +40,18 @@ export default {
     async refresh() {
       this.loading = true
       try {
-        this.currency = await this.$store.dispatch('fetchCurrency')
-        console.log(this.currency)
+        /* this.currency = await this.$store.dispatch('fetchCurrency') */
+        this.currency = {
+          base: 'EUR',
+          date: new Date(),
+          rates: {
+            EUR: 1,
+            RUB: 88.807763,
+            USD: 1.20795
+          },
+          success: true,
+          timestamp: 1610848927
+        }
         this.loading = false
       } catch (e) {
         console.log(e)
@@ -50,8 +60,18 @@ export default {
   },
   async mounted() {
     try {
-      this.currency = await this.$store.dispatch('fetchCurrency')
-      console.log(this.currency)
+      /*  this.currency = await this.$store.dispatch('fetchCurrency') */
+      this.currency = {
+        base: 'EUR',
+        date: new Date(),
+        rates: {
+          EUR: 1,
+          RUB: 88.807763,
+          USD: 1.20795
+        },
+        success: true,
+        timestamp: 1610848927
+      }
       this.loading = false
     } catch (e) {
       console.log(e)

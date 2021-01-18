@@ -1,8 +1,9 @@
 {
-  "ProfileTitle" : "Profile",
-  "ProfileName" : "Name",
+  "ProfileTitle": "Profile",
+  "ProfileName": "Name",
   "MessageErrorName": "Enter your name",
   "UpdateName": "Update",
+
   "Menu_Bill": "Bill",
   "Menu_History": "History",
   "Menu_Planning": "Planning",
@@ -11,7 +12,15 @@
   "Detail_Title": "Detail",
 
   "Login": "Login",
+  "LogOut": "LogOut",
   "Registration": "Registration",
 
-  "RecordHistory": "Record history"
+  "RecordHistory": "Record history",
+
+  "BillInCurrency": "Bill in currency",
+  "ExchangeRate": "Exchange rate",
+  "Currency": "Currency",
+  "Exchange": "Exchange",
+  "Date": "Date",
+  "Expenses": "Expenses"
 }

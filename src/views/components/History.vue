@@ -6,13 +6,13 @@
         class="btn-small btn  waves-effect waves-light graf-button outcome"
         @click="renderOutcome"
       >
-        <i class="material-icons">Расход</i>
+        <i class="material-icons">Расходы</i>
       </button>
       <button
         class="btn-small btn  waves-effect waves-light graf-button"
         @click="renderIncome"
       >
-        <i class="material-icons">Доход</i>
+        <i class="material-icons">Доходы</i>
       </button>
       <button
         class="btn-small btn  waves-effect waves-light graf-button"
@@ -109,37 +109,39 @@ export default {
       const categoryLabels = []
 
       this.categories.forEach(c => {
-        console.log(c);
+        if (c.type === 'income') {
+          categoryLabels.push(c)
+        }
       })
 
       this.renderChart({
-        labels: this.categories.map(c => c.title),
+        labels: categoryLabels.map(c => c.title),
         datasets: [
           {
             label: 'Доходы по категориям',
-            data: this.categories.map(c => {
+            data: categoryLabels.map(c => {
               return this.records.reduce((total, r) => {
-                if (r.categoryId === c.id && r.type === 'outcome') {
+                if (r.type === 'income') {
                   total += +r.amount
                 }
                 return total
               }, 0)
             }),
             backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
               'rgba(54, 162, 235, 0.2)',
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
               'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
-              'rgba(255, 99, 132, 1)',
+              'rgba(255, 159, 64, 1)',
               'rgba(54, 162, 235, 1)',
               'rgba(255, 206, 86, 1)',
               'rgba(75, 192, 192, 1)',
+              'rgba(255, 99, 132, 1)',
               'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
           }
@@ -161,58 +163,22 @@ export default {
         }
       })
       this.setupPagination(outcomeArray)
-    },
+      const categoryLabels = []
 
-    allChart() {
-      this.setupPagination(
-        this.records.map(record => {
-          return {
-            ...record,
-            categoryName: this.categories.find(c => c.id === record.categoryId)
-              .title,
-            typeClass: record.type === 'income' ? 'green' : 'red',
-            typeName: record.type === 'income' ? 'Доход' : 'Расход'
-          }
-        })
-      )
-
-      const arr = [
-        { title: 'Доход', type: 'income' },
-        { title: 'Расход', type: 'outcome' }
-      ]
-      this.renderChart({
-        labels: arr.map(c => c.title),
-        datasets: [
-          {
-            label: 'Доход и расход',
-            data: arr.map(c => {
-              return this.records.reduce((total, r) => {
-                if (r.type === c.type) {
-                  total += +r.amount
-                }
-                return total
-              }, 0)
-            }),
-            backgroundColor: [
-              'rgba(74, 201, 6, 0.2)',
-              'rgba(255, 99, 132, 0.2)'
-            ],
-            borderColor: ['rgba(74, 201, 2, 1)', 'rgba(255, 99, 132, 1)'],
-            borderWidth: 1
-          }
-        ]
+      this.categories.forEach(c => {
+        if (c.type === 'outcome') {
+          categoryLabels.push(c)
+        }
       })
-    },
 
-    setup() {
       this.renderChart({
-        labels: this.categories.map(c => c.title),
+        labels: categoryLabels.map(c => c.title),
         datasets: [
           {
             label: 'Расходы по категориям',
-            data: this.categories.map(c => {
+            data: categoryLabels.map(c => {
               return this.records.reduce((total, r) => {
-                if (r.categoryId === c.id && r.type === 'outcome') {
+                if (r.type === 'outcome') {
                   total += +r.amount
                 }
                 return total
@@ -238,8 +204,50 @@ export default {
           }
         ]
       })
+    },
+
+    allChart() {
+      this.setupPagination(
+        this.records.map(record => {
+          return {
+            ...record,
+            categoryName: this.categories.find(c => c.id === record.categoryId)
+              .title,
+            typeClass: record.type === 'income' ? 'green' : 'red',
+            typeName: record.type === 'income' ? 'Доход' : 'Расход'
+          }
+        })
+      )
+
+      const arrType = [
+        { title: 'Доход', type: 'income' },
+        { title: 'Расход', type: 'outcome' }
+      ]
+      this.renderChart({
+        labels: arrType.map(c => c.title),
+        datasets: [
+          {
+            label: 'Доход и расход',
+            data: arrType.map(c => {
+              return this.records.reduce((total, r) => {
+                if (r.type === c.type) {
+                  total += +r.amount
+                }
+                return total
+              }, 0)
+            }),
+            backgroundColor: [
+              'rgba(74, 201, 6, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: ['rgba(74, 201, 2, 1)', 'rgba(255, 99, 132, 1)'],
+            borderWidth: 1
+          }
+        ]
+      })
     }
   },
+
   async mounted() {
     this.records = await this.$store.dispatch('fetchRecords')
     this.categories = await this.$store.dispatch('fetchCategories')
