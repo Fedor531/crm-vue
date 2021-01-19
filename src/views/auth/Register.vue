@@ -43,7 +43,7 @@
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
-          Ввежите пароль
+          Введите пароль
         </small>
         <small
           class="helper-text invalid"
@@ -66,6 +66,21 @@
           v-if="$v.name.$dirty && !$v.name.required"
         >
           Введите ваше имя
+        </small>
+      </div>
+      <div class="input-field">
+        <input
+          :class="{ invalid: $v.bill.$dirty && !$v.bill.required }"
+          v-model.number="bill"
+          id="bill"
+          type="number"
+        />
+        <label for="bill">Начальная сумма в рублях</label>
+        <small
+          class="helper-text invalid"
+          v-if="$v.bill.$dirty && !$v.bill.required"
+          >
+          Введите начальную сумму
         </small>
       </div>
       <p>
@@ -105,12 +120,14 @@ export default {
     email: '',
     password: '',
     name: '',
+    bill: null,
     agree: false
   }),
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(8) },
     name: { required },
+    bill: { required },
     agree: { checked: v => v }
   },
 
@@ -125,7 +142,8 @@ export default {
       const formData = {
         email: this.email,
         password: this.password,
-        name: this.name
+        name: this.name,
+        bill: this.bill
       }
       try {
         await this.$store.dispatch('register', formData).then(() => {

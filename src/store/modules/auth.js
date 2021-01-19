@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 
 export default {
   actions: {
-    async login({ dispatch, commit }, { email, password }) {
+    async login({ commit }, { email, password }) {
       try {
         // Метод авторизации
         await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -13,13 +13,13 @@ export default {
       }
     },
 
-    async logout({ dispatch, commit }) {
+    async logout({ commit }) {
       // Очистка информации о пользователе
       await firebase.auth().signOut()
       commit('clearInfo')
     },
 
-    async register({ dispatch, commit }, { email, password, name }) {
+    async register({ dispatch, commit }, { email, password, name, bill }) {
       try {
         // Метод авторизации
         await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -30,7 +30,7 @@ export default {
           .database()
           .ref(`/users/${uid}/info`)
           .set({
-            bill: 10000,
+            bill,
             name
           })
       } catch (e) {

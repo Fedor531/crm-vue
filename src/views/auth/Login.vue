@@ -43,7 +43,7 @@
           class="helper-text invalid"
           v-if="$v.password.$dirty && !$v.password.required"
         >
-          Ввежите пароль
+          Введите пароль
         </small>
         <small
           class="helper-text invalid"
