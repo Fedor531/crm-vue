@@ -77,7 +77,8 @@ export default {
     loading: true,
     records: [],
     categories: [],
-    update: 0
+    update: 0,
+    activeChart: null
   }),
   mixins: [paginationMixin],
   components: {
@@ -87,11 +88,26 @@ export default {
     async deleteRecord(recordId) {
       await this.$store.dispatch('deleteRecord', recordId)
       this.records = this.records.filter(r => r.id !== recordId)
-      this.setup()
+      switch (this.activeChart) {
+        case 'all':
+          this.allChart()
+          break
+        case 'income':
+          this.renderIncome()
+          break
+        case 'outcome':
+          this.renderOutcome()
+          break
+        default:
+          this.allChart()
+          break
+      }
       this.$message('Запись удалена')
     },
 
     renderIncome() {
+      this.activeChart = 'income'
+
       const incomeArray = []
       this.records.forEach(record => {
         if (record.type === 'income') {
@@ -121,7 +137,7 @@ export default {
             label: 'Доходы по категориям',
             data: categoryLabels.map(c => {
               return this.records.reduce((total, r) => {
-                if (r.type === 'income') {
+                if (r.type === 'income' && r.categoryId === c.id) {
                   total += +r.amount
                 }
                 return total
@@ -133,7 +149,7 @@ export default {
               'rgba(255, 206, 86, 0.2)',
               'rgba(75, 192, 192, 0.2)',
               'rgba(255, 99, 132, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
             ],
             borderColor: [
               'rgba(255, 159, 64, 1)',
@@ -141,7 +157,7 @@ export default {
               'rgba(255, 206, 86, 1)',
               'rgba(75, 192, 192, 1)',
               'rgba(255, 99, 132, 1)',
-              'rgba(153, 102, 255, 1)',
+              'rgba(153, 102, 255, 1)'
             ],
             borderWidth: 1
           }
@@ -150,6 +166,8 @@ export default {
     },
 
     renderOutcome() {
+      this.activeChart = 'outcome'
+
       const outcomeArray = []
       this.records.forEach(record => {
         if (record.type === 'outcome') {
@@ -178,7 +196,7 @@ export default {
             label: 'Расходы по категориям',
             data: categoryLabels.map(c => {
               return this.records.reduce((total, r) => {
-                if (r.type === 'outcome') {
+                if (r.type === 'outcome' && r.categoryId === c.id) {
                   total += +r.amount
                 }
                 return total
@@ -207,6 +225,8 @@ export default {
     },
 
     allChart() {
+      this.activeChart = 'all'
+
       this.setupPagination(
         this.records.map(record => {
           return {

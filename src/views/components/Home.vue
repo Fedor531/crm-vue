@@ -40,14 +40,14 @@ export default {
     async refresh() {
       this.loading = true
       try {
-        /* this.currency = await this.$store.dispatch('fetchCurrency') */
+        /* this.currencyу = await this.$store.dispatch('fetchCurrency') */
         this.currency = {
           base: 'EUR',
           date: new Date(),
           rates: {
             EUR: 1,
-            RUB: 88.807763,
-            USD: 1.20795
+            RUB: 89.595339,
+            USD: 1.21357
           },
           success: true,
           timestamp: 1610848927
@@ -66,8 +66,8 @@ export default {
         date: new Date(),
         rates: {
           EUR: 1,
-          RUB: 88.807763,
-          USD: 1.20795
+          RUB: 89.595339,
+          USD: 1.21357
         },
         success: true,
         timestamp: 1610848927
