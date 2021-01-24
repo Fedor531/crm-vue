@@ -23,7 +23,7 @@
     </div>
 
     <div class="history-chart">
-      <canvas ref="canvas"></canvas>
+      <canvas ref="canvas" width="1000px" height="700px"></canvas>
     </div>
 
     <Loader v-if="loading" />
@@ -120,14 +120,25 @@ export default {
           })
         }
       })
-      this.setupPagination(incomeArray)
+      this.setupPagination(incomeArray.reverse())
 
       const categoryLabels = []
 
       this.categories.forEach(c => {
-        if (c.type === 'income') {
+        if (
+          this.records.find(r => {
+            return r.categoryId == c.id
+          }) &&
+          c.type === 'income'
+        ) {
           categoryLabels.push(c)
         }
+      })
+
+      const backgroundC = categoryLabels.map(c => {
+        return `rgba(${Math.ceil(Math.random() * 255)}, ${Math.ceil(
+          Math.random() * 255
+        )}, ${Math.ceil(Math.random() * 255)}, .4)`
       })
 
       this.renderChart({
@@ -143,22 +154,8 @@ export default {
                 return total
               }, 0)
             }),
-            backgroundColor: [
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 159, 64, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(153, 102, 255, 1)'
-            ],
+            backgroundColor: backgroundC,
+            borderColor: backgroundC,
             borderWidth: 1
           }
         ]
@@ -180,13 +177,25 @@ export default {
           })
         }
       })
-      this.setupPagination(outcomeArray)
+
+      this.setupPagination(outcomeArray.reverse())
       const categoryLabels = []
 
       this.categories.forEach(c => {
-        if (c.type === 'outcome') {
+        if (
+          this.records.find(r => {
+            return r.categoryId == c.id
+          }) &&
+          c.type === 'outcome'
+        ) {
           categoryLabels.push(c)
         }
+      })
+
+      const backgroundC = categoryLabels.map(c => {
+        return `rgba(${Math.ceil(Math.random() * 255)}, ${Math.ceil(
+          Math.random() * 255
+        )}, ${Math.ceil(Math.random() * 255)}, .4)`
       })
 
       this.renderChart({
@@ -202,22 +211,8 @@ export default {
                 return total
               }, 0)
             }),
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
+            backgroundColor: backgroundC,
+            borderColor: backgroundC,
             borderWidth: 1
           }
         ]
@@ -228,15 +223,18 @@ export default {
       this.activeChart = 'all'
 
       this.setupPagination(
-        this.records.map(record => {
-          return {
-            ...record,
-            categoryName: this.categories.find(c => c.id === record.categoryId)
-              .title,
-            typeClass: record.type === 'income' ? 'green' : 'red',
-            typeName: record.type === 'income' ? 'Доход' : 'Расход'
-          }
-        })
+        this.records
+          .map(record => {
+            return {
+              ...record,
+              categoryName: this.categories.find(
+                c => c.id === record.categoryId
+              ).title,
+              typeClass: record.type === 'income' ? 'green' : 'red',
+              typeName: record.type === 'income' ? 'Доход' : 'Расход'
+            }
+          })
+          .reverse()
       )
 
       const arrType = [

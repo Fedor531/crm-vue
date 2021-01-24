@@ -31,7 +31,8 @@ export default {
           .ref(`/users/${uid}/info`)
           .set({
             bill,
-            name
+            name,
+            locale: 'ru-RU'
           })
       } catch (e) {
         commit('setError', e)
