@@ -49,6 +49,10 @@ export default {
         title: localizeFilter('Menu_Categories'),
         url: '/categories',
       },
+      {
+        title: localizeFilter('Menu_Updates'),
+        url: '/updates',
+      },
       
     ]
   })

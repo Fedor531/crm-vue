@@ -86,6 +86,15 @@ const routes = [
     },
     component: () => import('../views/components/Record.vue')
   },
+  {
+    path: '/updates',
+    name: 'updates',
+    meta: {
+      layout: 'main',
+      auth: true
+    },
+    component: () => import('../views/components/Updates.vue')
+  },
 ]
 
 const router = new VueRouter({

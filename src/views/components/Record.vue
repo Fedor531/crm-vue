@@ -11,42 +11,41 @@
     </p>
 
     <form class="form" v-else @submit.prevent="onSubmit">
+      <div class="type-amount">
+        <div>
+          <label>
+            <input
+              class="with-gap"
+              name="type"
+              type="radio"
+              value="outcome"
+              v-model="type"
+            />
+            <span class="type-name">Расход</span>
+          </label>
+        </div>
+        <div class="income-btn">
+          <label>
+            <input
+              class="with-gap"
+              name="type"
+              type="radio"
+              value="income"
+              v-model="type"
+            />
+            <span class="type-name">Доход</span>
+          </label>
+        </div>
+      </div>
+
       <div class="input-field">
         <select ref="select" v-model="categoryId">
-          <option v-for="c in categories" :key="c.id" :value="c.id">
+          <option v-for="c in sortCategories" :key="c.id" :value="c.id">
             {{ c.title }}
           </option>
         </select>
         <label>Выберите категорию</label>
       </div>
-
-      <p>
-        <label>
-          <input
-            disabled
-            class="with-gap"
-            name="type"
-            type="radio"
-            value="income"
-            v-model="type"
-          />
-          <span>Доход</span>
-        </label>
-      </p>
-
-      <p>
-        <label>
-          <input
-            disabled
-            class="with-gap"
-            name="type"
-            type="radio"
-            value="outcome"
-            v-model="type"
-          />
-          <span>Расход</span>
-        </label>
-      </p>
 
       <div class="input-field">
         <input
@@ -84,11 +83,24 @@
 
       <button class="btn waves-effect waves-light" type="submit">
         Создать
-        <i class="material-icons right">send</i>
+        <i class="material-icons right">create</i>
       </button>
     </form>
   </div>
 </template>
+
+<style lang="sass" scoped>
+.type-name
+  color: #000
+
+.income-btn
+  margin-left: 20px
+
+.type-amount
+  margin-bottom: 40px
+  display: flex
+
+</style>
 
 <script>
 import { required, minValue } from 'vuelidate/lib/validators'
@@ -104,6 +116,7 @@ export default {
   data: () => ({
     loading: true,
     categories: [],
+    sortCategories: [],
     select: null,
     categoryId: null,
     type: 'outcome',
@@ -115,14 +128,18 @@ export default {
     description: { required }
   },
   watch: {
-    categoryId() {
-      this.categories.forEach(c => {
-        if (c.id === this.categoryId && c.type === 'income') {
-          this.type = 'income'
-        } else if (c.id === this.categoryId && c.type === 'outcome') {
-          this.type = 'outcome'
-        }
-      })
+    async type() {
+      if (this.type === 'outcome') {
+        this.sortCategories = this.categories.filter(c => c.type === 'outcome')
+      } else if (this.type === 'income') {
+        this.sortCategories = this.categories.filter(c => c.type === 'income')
+      }
+      this.categoryId = this.sortCategories[0].id
+
+      setTimeout(() => {
+        this.select = M.FormSelect.init(this.$refs.select)
+        M.updateTextFields()
+      }, 200)
     }
   },
   computed: {
@@ -172,11 +189,14 @@ export default {
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')
     this.loading = false
-
     if (this.categories.length) {
-      this.categoryId = this.categories[0].id
+      if (this.type === 'outcome') {
+        this.sortCategories = this.categories.filter(c => c.type === 'outcome')
+      } else if (this.type === 'income') {
+        this.sortCategories = this.categories.filter(c => c.type === 'income')
+      }
+      this.categoryId = this.sortCategories[0].id
     }
-
     setTimeout(() => {
       this.select = M.FormSelect.init(this.$refs.select)
       M.updateTextFields()
