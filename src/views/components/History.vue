@@ -32,8 +32,9 @@
       Записей пока нет <router-link to="/record">Добавьте первую</router-link>
     </p>
 
-    <section :key="content" v-else>
+    <section v-else>
       <HistoryTable
+        :key="content"
         :categories="categories"
         :records="items"
         @delete="deleteRecord"
@@ -91,7 +92,8 @@ export default {
     HistoryTable
   },
   methods: {
-    updateAll() {
+    async updateAll() {
+      this.records = await this.$store.dispatch('fetchRecords')
       switch (this.activeChart) {
         case 'all':
           this.content += 1
