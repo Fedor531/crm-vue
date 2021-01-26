@@ -17,7 +17,6 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    // Объект meta для записи каких-либо свойств в route
     meta: {
       layout: 'empty'
     },
@@ -26,7 +25,6 @@ const routes = [
   {
     path: '/registration',
     name: 'register',
-    // Объект meta для записи каких-либо свойств в route
     meta: {
       layout: 'empty'
     },

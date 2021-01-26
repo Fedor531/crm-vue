@@ -62,6 +62,19 @@ export default {
         commit('setError', e)
         throw e
       }
+    },
+    async changeRecordCategory({ dispatch, commit }, data) {
+      try {
+        const uid = await dispatch('getUid')
+        await firebase
+          .database()
+          .ref(`/users/${uid}/records`)
+          .child(data.recordId)
+          .update({...data})
+      } catch (e) {
+        commit('setError', e)
+        throw e
+      }
     }
   }
 }

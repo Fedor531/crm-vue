@@ -32,8 +32,13 @@
       Записей пока нет <router-link to="/record">Добавьте первую</router-link>
     </p>
 
-    <section v-else>
-      <HistoryTable :records="items" @delete="deleteRecord" />
+    <section :key="content" v-else>
+      <HistoryTable
+        :categories="categories"
+        :records="items"
+        @delete="deleteRecord"
+        @updateAll="updateAll"
+      />
       <Paginate
         v-model="page"
         :page-count="pageCount"
@@ -78,30 +83,39 @@ export default {
     records: [],
     categories: [],
     update: 0,
-    activeChart: null
+    activeChart: null,
+    content: 0
   }),
   mixins: [paginationMixin],
   components: {
     HistoryTable
   },
   methods: {
-    async deleteRecord(recordId) {
-      await this.$store.dispatch('deleteRecord', recordId)
-      this.records = this.records.filter(r => r.id !== recordId)
+    updateAll() {
       switch (this.activeChart) {
         case 'all':
+          this.content += 1
           this.allChart()
           break
         case 'income':
+          this.content += 1
           this.renderIncome()
           break
         case 'outcome':
+          this.content += 1
           this.renderOutcome()
           break
         default:
+          this.content += 1
           this.allChart()
           break
       }
+    },
+
+    async deleteRecord(recordId) {
+      await this.$store.dispatch('deleteRecord', recordId)
+      this.records = this.records.filter(r => r.id !== recordId)
+      this.updateAll()
       this.$message('Запись удалена')
     },
 
